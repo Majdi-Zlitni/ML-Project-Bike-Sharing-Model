@@ -1,3 +1,40 @@
+# Project structure
+
+ML Bike Sharing Model/
+├── BikeModelApp/
+│ ├── app.py
+│ ├── templates/
+│ │ └── index.html
+│ ├── static/
+│ │ ├── css/
+│ │ │ └── styles.css
+│ │ └── js/
+│ └── **init**.py
+├── Model/
+│ └── modele_location_velos.pkl
+├── Notebooks/
+│ └── Bike_Sharing_Analysis.ipynb
+├── data/
+│ └── datahour_avec_nouvelles_fonctionnalites.csv
+├── requirements.txt
+├── README.md
+└── .gitignore
+
+BikeModelApp/
+Contient l'application Flask.
+
+app.py
+Fichier principal de l'application Flask.
+
+Model/
+Contient le modèle de machine learning sauvegardé.
+
+modele_location_velos.pkl
+Modèle entraîné sauvegardé avec joblib.
+
+data/
+Contient les fichiers de données.
+
 # Bike Sharing Dataset
 
 Bike sharing systems are a new generation of traditional bike rentals where the whole process from membership, rental, and return has become automatic.  
