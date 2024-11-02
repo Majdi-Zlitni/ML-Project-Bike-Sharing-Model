@@ -1,25 +1,26 @@
 # Project structure
 
+```plaintext
 ML Bike Sharing Model/
 ├── BikeModelApp/
-│ ├── app.py
-│ ├── templates/
-│ │ └── index.html
-│ ├── static/
-│ │ ├── css/
-│ │ │ └── styles.css
-│ │ └── js/
-│ └── **init**.py
+│   ├── app.py
+│   ├── templates/
+│   │   └── index.html
+│   ├── static/
+│   │   ├── css/
+│   │   │   └── styles.css
+│   │   └── js/
+│   └── __init__.py
 ├── Model/
-│ └── modele_location_velos.pkl
+│   └── modele_location_velos.pkl
 ├── Notebooks/
-│ └── Bike_Sharing_Analysis.ipynb
+│   └── Bike_Sharing_Analysis.ipynb
 ├── data/
-│ └── datahour_avec_nouvelles_fonctionnalites.csv
+│   └── datahour_avec_nouvelles_fonctionnalites.csv
 ├── requirements.txt
 ├── README.md
 └── .gitignore
-
+```
 BikeModelApp/
 Contient l'application Flask.
 
