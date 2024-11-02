@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Résultat de la Prédiction</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">
+        Résultat de la Prédiction
+      </h1>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          {% if prediction %}
+          <div class="alert alert-success">
+            <h4 class="alert-heading">
+              Prédiction Réussie!
+            </h4>
+            <p>
+              La prédiction pour les
+              caractéristiques fournies est :
+            </p>
+            <hr />
+            <p class="mb-0">
+              <strong>{{ prediction }}</strong>
+            </p>
+          </div>
+          {% else %}
+          <div class="alert alert-danger">
+            <h4 class="alert-heading">Erreur!</h4>
+            <p>
+              La prédiction a échoué. Veuillez
+              réessayer.
+            </p>
+          </div>
+          {% endif %}
+          <a
+            href="{{ url_for('predict') }}"
+            class="btn btn-primary mt-3"
+            >Faire une Nouvelle Prédiction</a
+          >
+          <a
+            href="{{ url_for('home') }}"
+            class="btn btn-secondary mt-3"
+            >Retour à l'accueil</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS et dépendances -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

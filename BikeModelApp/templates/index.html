@@ -1,333 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <title>Bike Sharing Prediction</title>
+    <title>Prédiction</title>
+    <!-- Bootstrap CSS -->
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="./../Static/css/styles.css"
     />
   </head>
   <body>
     <div class="container mt-5">
-      <h1 class="text-center">
-        Bike Sharing Prediction
-      </h1>
-      <form
-        action="/predict"
-        method="post"
-        class="mt-4"
-      >
-        <div class="form-group">
-          <label for="instant">Instant:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="instant"
-            name="instant"
-            value="1"
-          />
-        </div>
-        <div class="form-group">
-          <label for="yr">Year:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="yr"
-            name="yr"
-            value="0"
-          />
-        </div>
-        <div class="form-group">
-          <label for="mnth">Month:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="mnth"
-            name="mnth"
-            value="1"
-          />
-        </div>
-        <div class="form-group">
-          <label for="weekday">Weekday:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="weekday"
-            name="weekday"
-            value="6"
-          />
-        </div>
-        <div class="form-group">
-          <label for="weathersit"
-            >Weather Situation:</label
+      <h1 class="text-center mb-4">Prédiction</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <form
+            action="{{ url_for('predict') }}"
+            method="post"
           >
-          <input
-            type="text"
-            class="form-control"
-            id="weathersit"
-            name="weathersit"
-            value="1"
-          />
+            {% for feature in features %}
+            <div class="mb-3">
+              <label
+                for="{{ feature }}"
+                class="form-label"
+                >{{ feature }} :</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="{{ feature }}"
+                id="{{ feature }}"
+                value="{{ default_values[feature] }}"
+                required
+              />
+            </div>
+            {% endfor %}
+            <div class="d-grid gap-2">
+              <button
+                type="submit"
+                class="btn btn-primary"
+              >
+                Prédire
+              </button>
+            </div>
+          </form>
+          {% with messages =
+          get_flashed_messages() %} {% if messages
+          %}
+          <div class="alert alert-danger mt-3">
+            <ul class="mb-0">
+              {% for message in messages %}
+              <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %} {% endwith %}
         </div>
-        <div class="form-group">
-          <label for="temp">Temperature:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="temp"
-            name="temp"
-            value="0.24"
-          />
-        </div>
-        <div class="form-group">
-          <label for="atemp"
-            >Apparent Temperature:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="atemp"
-            name="atemp"
-            value="0.2879"
-          />
-        </div>
-        <div class="form-group">
-          <label for="hum">Humidity:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="hum"
-            name="hum"
-            value="0.81"
-          />
-        </div>
-        <div class="form-group">
-          <label for="windspeed"
-            >Windspeed:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="windspeed"
-            name="windspeed"
-            value="0.0"
-          />
-        </div>
-        <div class="form-group">
-          <label for="casual">Casual:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="casual"
-            name="casual"
-            value="3"
-          />
-        </div>
-        <div class="form-group">
-          <label for="registered"
-            >Registered:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="registered"
-            name="registered"
-            value="13"
-          />
-        </div>
-        <div class="form-group">
-          <label for="cnt">Count:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="cnt"
-            name="cnt"
-            value="16"
-          />
-        </div>
-        <div class="form-group">
-          <label for="income_level"
-            >Income Level:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="income_level"
-            name="income_level"
-            value="56708"
-          />
-        </div>
-        <div class="form-group">
-          <label for="user_satisfaction"
-            >User Satisfaction:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="user_satisfaction"
-            name="user_satisfaction"
-            value="1"
-          />
-        </div>
-        <div class="form-group">
-          <label for="bike_infrastructure_score"
-            >Bike Infrastructure Score:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="bike_infrastructure_score"
-            name="bike_infrastructure_score"
-            value="5"
-          />
-        </div>
-        <div class="form-group">
-          <label for="air_pollution_index"
-            >Air Pollution Index:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="air_pollution_index"
-            name="air_pollution_index"
-            value="0.90"
-          />
-        </div>
-        <div class="form-group">
-          <label for="public_transport_access"
-            >Public Transport Access:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="public_transport_access"
-            name="public_transport_access"
-            value="0.9"
-          />
-        </div>
-        <div class="form-group">
-          <label for="user_activity_level_encoded"
-            >User Activity Level Encoded:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="user_activity_level_encoded"
-            name="user_activity_level_encoded"
-            value="1"
-          />
-        </div>
-        <div class="form-group">
-          <label for="user_type_encoded"
-            >User Type Encoded:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="user_type_encoded"
-            name="user_type_encoded"
-            value="0"
-          />
-        </div>
-        <div class="form-group">
-          <label for="zone_type_encoded"
-            >Zone Type Encoded:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="zone_type_encoded"
-            name="zone_type_encoded"
-            value="1"
-          />
-        </div>
-        <div class="form-group">
-          <label for="temp_hum_interaction"
-            >Temperature-Humidity
-            Interaction:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="temp_hum_interaction"
-            name="temp_hum_interaction"
-            value="0.1944"
-          />
-        </div>
-        <div class="form-group">
-          <label for="casual_registered_ratio"
-            >Casual-Registered Ratio:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="casual_registered_ratio"
-            name="casual_registered_ratio"
-            value="0.23"
-          />
-        </div>
-        <div class="form-group">
-          <label for="high_temp"
-            >High Temperature:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="high_temp"
-            name="high_temp"
-            value="0.3"
-          />
-        </div>
-        <div class="form-group">
-          <label for="user_experience_score"
-            >User Experience Score:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="user_experience_score"
-            name="user_experience_score"
-            value="4"
-          />
-        </div>
-        <div class="form-group">
-          <label for="avg_rentals"
-            >Average Rentals:</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="avg_rentals"
-            name="avg_rentals"
-            value="20"
-          />
-        </div>
-        <button
-          type="submit"
-          class="btn btn-primary btn-block"
-        >
-          Predict
-        </button>
-      </form>
-      {% if prediction_text %}
-      <div class="prediction mt-4">
-        <h2 class="text-center">
-          {{ prediction_text }}
-        </h2>
       </div>
-      {% endif %}
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap JS et dépendances -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
